@@ -26,7 +26,7 @@ namespace SalesApp
             //Console.WriteLine(sales[0, 0]);
             GetSalesFigures(sales, salesArea, productName);
 
-            //DisplayResults(sales, salesArea, productName);
+            DisplayResults(sales, salesArea, productName);
             ReadKey();
 
         }
@@ -55,19 +55,25 @@ namespace SalesApp
                 salesNo = GetSalesNumber(salesmenName);
                 productNo = GetProductNumber(productName);
                 sales[salesNo, productNo] += GetSalesFigures();
-                
+
                 /* TODO: Prompt if there are more sales.  If there are
                  *       no more sales to record, set the moreData 
                  *       sentinel to false.
                  */
-                
+                Console.Write("Enter Y if more sales to record, else enter N");
+                string line = Console.ReadLine();
+                if (line.ToLower() != "y")
+                {
+                    moreData = false;
+                }
             }
         }
 
         public static int GetSalesNumber(string[] salesAreaName)
         {
             int salesNo = -1;
-            while (salesNo > 0 || salesNo < 5)
+            //
+            while (salesNo > salesAreaName.Length || salesNo < 1)
             {
                 Clear();
                 WriteLine("Sales Registry\n\n");
@@ -76,8 +82,24 @@ namespace SalesApp
                  *     1. Victoria
                  *     2. Nanaimo ... etc
                  */
+
+                //
+                for (int i = 0; i < salesAreaName.Length; i++)
+                {
+                    Console.WriteLine("{0}. {1}", i + 1, salesAreaName[i]);
+                }
                 Write("\nSales are for which sales area? (1-4):  ");
-                
+
+                string line = Console.ReadLine();
+
+                while (int.TryParse(line, out salesNo) == false || salesNo < 1 || salesNo > salesAreaName.Length)
+                {
+                    Console.WriteLine(" Opps! Please enter a valid number.");
+                    Write("\nSales are for which sales area? (1-4):  ");
+                    line = Console.ReadLine();
+                }
+
+
                 /*
                  * TODO: read in a salesNo value that is confirmed to be valid,
                  *       if it isn't, display a message, then reread the value
@@ -90,7 +112,8 @@ namespace SalesApp
         public static int GetProductNumber(string[] productName)
         {
             int productNo = -1;
-            while (productNo > 0 || productNo < 4)
+            //
+            while (productNo > productName.Length || productNo < 1)
             {
                 Clear();
                 WriteLine("Products\n\n");
@@ -100,13 +123,26 @@ namespace SalesApp
 		 *     2. Apple ... etc
                  */
 
+                for (int i = 0; i < productName.Length; i++)
+                {
+                    Console.WriteLine("{0}. {1}", i + 1, productName[i]);
+                }
+
                 Write("\nSales are for which product?  ");
-                
+
                 /*
                  * TODO: read in a productNo value that is confirmed to be valid,
                  *       if it isn't, display a message, then reread the value
                  *       until it is valid.
-                 */                
+                 */
+                string line = Console.ReadLine();
+
+                while (int.TryParse(line, out productNo) == false || productNo < 1 || productNo > productName.Length)
+                {
+                    Console.WriteLine(" Opps! Please enter a valid number.");
+                    Write("\nSales are for which product?  ");
+                    line = Console.ReadLine();
+                }
 
             }
             return productNo - 1;
@@ -119,7 +155,16 @@ namespace SalesApp
             /*
              * TODO: read in a salesAmt value that is confirmed to be valid,
              *       if it isn't, display a message, then reread the value.
-             */            
+             */
+
+            string line = Console.ReadLine();
+
+            while (double.TryParse(line, out salesAmt) == false || salesAmt < 0)
+            {
+                Console.WriteLine(" Opps! Please enter a valid number.");
+                Write("What was the sales amount? ");
+                line = Console.ReadLine();
+            }
 
             return salesAmt;
         }
@@ -134,7 +179,17 @@ namespace SalesApp
                 Write("{0, 10}", productName[i]);
             }
             WriteLine();
-            
+
+            for (int row = 0; row < sales.GetLength(0); row++)
+            {
+                Console.Write(" {0,12}", salesAreaName[row]);
+                for (int col = 0; col < sales.GetLength(1); col++)
+                {
+                    Console.Write("{0,10:F2}", sales[row,col]);
+                }
+                Console.WriteLine();
+            }
+
             /* 
              * TODO: display the sales data in table format like this:
              *      
