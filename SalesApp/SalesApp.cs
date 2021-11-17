@@ -60,22 +60,13 @@ namespace SalesApp
                  *       no more sales to record, set the moreData 
                  *       sentinel to false.
                  */
-<<<<<<< HEAD
-                Console.Write("Y if there are more sales to record or n if not.");
+
+                Console.Write("Y if there are more sales to record or N if not. ");
                 string answer = Console.ReadLine();
                 if (answer.ToLower() != "y")
                 {
                     moreData = false;
                 }
-                
-=======
-                Console.Write("Enter Y if more sales to record, else enter N");
-                string line = Console.ReadLine();
-                if (line.ToLower() != "y")
-                {
-                    moreData = false;
-                }
->>>>>>> b92aa24b4b5ee15ed50c030af090a1932c048974
             }
         }
 
