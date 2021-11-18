@@ -174,7 +174,7 @@ namespace SalesApp
         {
             Clear();
             WriteLine("\t\tSales Summary\n\n");
-            Write("{0, -15}", "Sales Area");
+            Write("{0, -13}", "Sales Area");
             for (int i = 0; i < productName.Length; i++)
             {
                 Write("{0, 10}", productName[i]);
@@ -183,7 +183,7 @@ namespace SalesApp
 
             for (int row = 0; row < sales.GetLength(0); row++)
             {
-                Console.Write(" {0,12}", salesAreaName[row]);
+                Console.Write(" {0,-12}", salesAreaName[row]);
                 for (int col = 0; col < sales.GetLength(1); col++)
                 {
                     Console.Write("{0,10:F2}", sales[row,col]);
